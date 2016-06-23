@@ -7,6 +7,9 @@
     "node": ">= 6.0",
     "npm": ">= 3.8.6"
   },
+  "bin": {
+    "hp4t": "./bin/hp4t.sh"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ."
