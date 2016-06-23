@@ -1,0 +1,48 @@
+{
+  "name": "hp4t",
+  "version": "0.0.1",
+  "description": "HP4T",
+  "main": "src/cli.js",
+  "engines": {
+    "node": ">= 6.0",
+    "npm": ">= 3.8.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "prepublish": "npm version patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wojtekk/hp4t.git"
+  },
+  "keywords": [
+    "continous",
+    "delivery",
+    "continous",
+    "deployment",
+    "travis",
+    "heroku",
+    "pipeline"
+  ],
+  "author": "Wojciech Krawczyk <wojciech.krawczyk@schibsted.pl> (https://github.com/wojtekk)",
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wojtekk/hp4t/issues"
+  },
+  "homepage": "https://github.com/wojtekk/hp4t#readme",
+  "dependencies": {
+    "command-line-args": "2.1.6",
+    "dotenv": "2.0.0",
+    "lodash": "4.13.1",
+    "octokat": "0.5.0-beta.0",
+    "shelljs": "0.7.0"
+  },
+  "devDependencies": {
+    "eslint": "2.13.1",
+    "eslint-config-airbnb-base": "3.0.1",
+    "eslint-plugin-import": "1.9.2",
+    "eslint-plugin-security": "1.2.0"
+  }
+}
