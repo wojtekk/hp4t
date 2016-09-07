@@ -9,14 +9,14 @@ Usage:
 Commands:
 
 - `help` - display help
-- `provision <env_name>` - provision app_name
-- `provision-pipeline` - provision pipeline
-- `deploy <env_name>` - deploy to app_name
-- `promote <env_name>` - promote from app
-- `run <env_name> <command>` - run command on Heroku
-- `local <command>` - run command locally
-- `setup` - initialize project
-- `export <env_name>` - export Heroku app configuration
+- `init <language>` - initialize project
+- `export <environment>` - Export Heroku application configuration
+- `provision-pipeline` - Configure Heroku pipelines
+- `provision <environment>` - Configure Heroku application
+- `deploy <environment>` - Deploy application
+- `promote <environment>` - Promote application to next environment
+- `run-remote <environment> <command>` - Run command on Heroku
+- `run-local <environment> <command>` - Run command locally
 
 Options:
 
@@ -119,7 +119,7 @@ before_script:
 - hp4t run stage "migrate database" --branch develop
 - hp4t deploy stage --branch develop
 - hp4t provision production --tags --branch master
-- hp4t deploy production --tags # to production
+- hp4t deploy production --tags --branch master # to production
 - hp4t run production "migrate database" --tags --branch master
 - hp4t deploy featureX --branch featureX
 script:
@@ -140,7 +140,7 @@ Example:
 infrastructure:
 - dir: infrastructure/
 environments:
-  defaults:
+  default:
   - slug: wojtekk/hp4t
   - branch: master
   stage:

@@ -1,10 +1,10 @@
 function checkConditions() {
-  return true;
+  return false;
 }
 
 module.exports = (opts) => {
   function execute() {
-    console.log('Promote');
+    console.log('Init');
     return true;
   }
 

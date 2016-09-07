@@ -4,7 +4,7 @@ function checkConditions() {
 
 module.exports = (opts) => {
   function execute() {
-    console.log('Promote');
+    console.log('Provision pipeline');
     return true;
   }
 
