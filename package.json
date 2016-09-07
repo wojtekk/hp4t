@@ -1,6 +1,6 @@
 {
   "name": "hp4t",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "HP4T",
   "main": "src/cli.js",
   "engines": {
