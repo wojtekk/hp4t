@@ -127,13 +127,13 @@ const command = commandsFactory.getCommand(commandName);
 
 if (!command || !command.checkConditions) {
   logger.error('Unknown or broken command');
-  process.exit(1);
+  process.exit(2);
 }
 
 if (command.checkConditions()) {
   if (!config.environmentExists(environment)) {
     logger.error('Unknown environment');
-    process.exit(2);
+    process.exit(3);
   }
 
   const expectedSlug = options.slug || config.get(environment, 'slug');
@@ -147,7 +147,7 @@ if (command.checkConditions()) {
 
   if (!engine) {
     logger.error('Unknown CI/CD tool');
-    process.exit(2);
+    process.exit(4);
   } else if (!pullRequestCondition.check(engine.isPullRequest()) ||
     !slugCondition.check(engine.getSlug()) ||
     !branchCondition.check(engine.getBranch()) ||
@@ -166,7 +166,7 @@ try {
     result
       .catch(err => {
         logger.error('Unexpected exception', err);
-        process.exit(4);
+        process.exit(5);
       })
       .then(() => {
         logger.info('Command executed successfully');
@@ -174,11 +174,11 @@ try {
       });
   } else if (!result) {
     logger.error('Error during command execution');
-    process.exit(3);
+    process.exit(6);
   } else {
     process.exit(0);
   }
 } catch (err) {
   logger.error('Unexpected exception', err);
-  process.exit(4);
+  process.exit(7);
 }
