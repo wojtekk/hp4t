@@ -1,12 +1,12 @@
 const yargs = require('yargs');
 const enginesFactory = require('./enginesFactory')();
-const commandFactory = require('./commandsFactory')();
 const pullRequestConditionFactory = require('./conditions/pullRequest');
 const slugConditionFactory = require('./conditions/slug');
 const branchConditionFactory = require('./conditions/branch');
 const tagsConditionFactory = require('./conditions/tags');
 const loggerFactory = require('./logger');
-
+const path = require('path');
+const fs = require('fs');
 
 const defaultOptions = {
   branch: {
@@ -31,7 +31,7 @@ const defaultOptions = {
   },
 };
 
-const options = yargs
+const consoleArguments = yargs
   .usage('Usage: hp4t <cmd> [args]')
   .command('init [language]', 'Initialize project', {
     language: {
@@ -41,18 +41,25 @@ const options = yargs
       default: 'nodejs',
       choices: ['php', 'nodejs'],
     },
-    verbose: {
-      alias: 'v',
-      describe: 'Verbose mode',
-      type: 'boolean',
-    }
+    verbose: defaultOptions.verbose,
   })
-  .command('export <environment>', 'Export Heroku configuration', {
-    verbose: {
-      alias: 'v',
-      describe: 'Verbose mode',
-      type: 'boolean',
-    }
+  .command('export <application>', 'Export Heroku application configuration', {
+    key: {
+      alias: 'k',
+      describe: 'Heroku API key',
+      type: 'string',
+      required: true,
+    },
+    verbose: defaultOptions.verbose,
+  })
+  .command('export-pipeline <pipeline>', 'Export Heroku pipeline configuration', {
+    key: {
+      alias: 'k',
+      describe: 'Heroku API key',
+      type: 'string',
+      required: true,
+    },
+    verbose: defaultOptions.verbose,
   })
   .command('provision <environment> [args]', 'Configure Heroku application', defaultOptions)
   .command('provision-pipeline [args]', 'Configure Heroku pipelines', defaultOptions)
@@ -61,24 +68,48 @@ const options = yargs
   .command('run-remote <environment> <command> [args]', 'Run command on Heroku', defaultOptions)
   .command('run-local <environment> <command> [args]', 'Run command locally', defaultOptions)
   .strict()
-  .help()
-  .argv;
+  .help();
+
+const options = consoleArguments.argv;
+
+if (options._[0] === undefined) {
+  consoleArguments.showHelp();
+  process.exit(1);
+}
 
 const logger = loggerFactory({ verbose: options.verbose || false })
 
 logger.debug('Verbose mode');
-logger.debug('Runned with options:', options);
 
-const environmentName = options.environment || null;
-logger.debug('Environment name:', environmentName);
+const hp4tDir = path.resolve(`${__dirname}/../`);
+const projectDir = process.cwd();
 
-const configFile = '.hp4t.yaml';
+logger.debug('HP4T directory:', hp4tDir);
+logger.debug('Project directory:', projectDir);
+
+logger.debug('Options:', options);
+
+const environment = options.environment || null;
+logger.debug('Environment name:', environment);
+
+const configFile = `${projectDir}/.hp4t.yml`;
 const config = require('./config')({ file: configFile });
 
 const commandName = options._[0];
 logger.debug('Command name:', commandName);
 
-const command = commandFactory.getCommand(commandName);
+const engine = enginesFactory.getEngine();
+
+const commandsFactory = require('./commandsFactory')({
+  config,
+  options,
+  engine,
+  hp4tDir,
+  projectDir,
+  logger,
+  environment,
+});
+const command = commandsFactory.getCommand(commandName);
 
 if (!command || !command.checkConditions) {
   logger.error('Unknown or broken command');
@@ -86,16 +117,14 @@ if (!command || !command.checkConditions) {
 }
 
 if (command.checkConditions()) {
-  const expectedSlug = options.slug || config.get(environmentName, 'slug');
-  const expectedBranch = options.branch || config.get(environmentName, 'branch');
-  const expectedTags = options.tags || config.get(environmentName, 'tags');
+  const expectedSlug = options.slug || config.get(environment, 'slug');
+  const expectedBranch = options.branch || config.get(environment, 'branch');
+  const expectedTags = options.tags || config.get(environment, 'tags');
 
   const pullRequestCondition = pullRequestConditionFactory();
   const slugCondition = slugConditionFactory({ expectedSlug });
   const branchCondition = branchConditionFactory({ expectedBranch });
   const tagsCondition = tagsConditionFactory({ expectedTags });
-
-  const engine = enginesFactory.getEngine();
 
   if (!engine) {
     logger.error('Unknown CI/CD tool');
@@ -107,15 +136,26 @@ if (command.checkConditions()) {
 }
 
 try {
-  const result = command.execute({ config, options });
-  if (!result) {
-    logger.error('Unknown error during command execution');
-    process.exit(3);
+  const result = command.execute();
+
+  if (result instanceof Promise ||
+    typeof result.then === 'function') {
+    logger.debug('Command return Promise, waiting ...');
+    result
+      .catch(err => {
+        logger.error('Unexpected exception', err);
+        process.exit(4);
+      })
+      .then(() => process.exit(0));
   } else {
-    process.exit(0);
+    if (!result) {
+      logger.error('Unknown error during command execution');
+      process.exit(3);
+    } else {
+      process.exit(0);
+    }
   }
-} catch (e) {
-  logger.error('Unexpected exception', e);
+} catch (err) {
+  logger.error('Unexpected exception', err);
   process.exit(4);
 }
-

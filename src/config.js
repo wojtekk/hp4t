@@ -1,10 +1,14 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-function getConfig(fileName) {
+function getConfig(file) {
   try {
-    const config = yaml.safeLoad(fs.readFileSync(fileName, 'utf8'));
-    return config;
+    if (!fs.existsSync(file)) {
+      return yaml.safeLoad(fs.readFileSync(file, 'utf8'));
+    }
+    else {
+      return {};
+    }
   } catch (e) {
     console.log(e);
     return {};
@@ -27,6 +31,9 @@ module.exports = (opts) => {
   }
 
   function get(environment, property, defaultValue) {
+    if (!environment || !property) {
+      return null;
+    }
     const envConfig = getEnvironmentConfiguration(environment);
     const defaultConfig = getDefaultEnvironmentConfiguration();
 
