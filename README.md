@@ -18,6 +18,7 @@ Commands:
 - `promote <environment>` - Promote application to next environment
 - `run-remote <environment> <command>` - Run command on Heroku
 - `run-local <environment> <command>` - Run command locally
+- `notify-rollbar` - Notify Rollbar about deployment
 
 Options:
 
