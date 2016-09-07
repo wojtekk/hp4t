@@ -5,11 +5,8 @@ function checkConditions() {
 }
 
 module.exports = (opts) => {
-  const engine = opts.engine;
   const options = opts.options;
   const config = opts.config;
-  const hp4tDir = opts.hp4tDir;
-  const projectDir = opts.projectDir;
   const logger = opts.logger;
   const environment = opts.environment;
 
@@ -22,7 +19,7 @@ module.exports = (opts) => {
   }
 
   function execute() {
-    console.log('Run command on Heroku application');
+    logger.info('Run command on Heroku application');
 
     const appName = getAppName();
     const remoteCommand = getCommand();
@@ -36,7 +33,7 @@ module.exports = (opts) => {
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

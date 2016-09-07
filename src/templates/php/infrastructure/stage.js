@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 function getConfiguration(opts) {
-  /* eslint-disable-next-line global-require */
+  // eslint-disable-next-line global-require
   const baseConfig = require('./base')(opts);
 
   const config = {

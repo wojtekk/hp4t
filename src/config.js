@@ -1,22 +1,21 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
 
-function getConfig(file) {
-  try {
-    if (fs.existsSync(file)) {
-      return yaml.safeLoad(fs.readFileSync(file, 'utf8'));
-    }
-    else {
-      return {};
-    }
-  } catch (e) {
-    console.log(e);
-    return {};
-  }
-}
-
 module.exports = (opts) => {
   const logger = opts.logger;
+
+  function getConfig(file) {
+    try {
+      if (fs.existsSync(file)) {
+        return yaml.safeLoad(fs.readFileSync(file, 'utf8'));
+      }
+      return {};
+    } catch (e) {
+      logger.error(e);
+      return {};
+    }
+  }
+
   const config = getConfig(opts.file);
 
   logger.debug('Configuration:\n', config);
@@ -24,9 +23,8 @@ module.exports = (opts) => {
   function getInfrastructureDir() {
     if (config.infrastructure && config.infrastructure.dir) {
       return config.infrastructure.dir;
-    } else {
-      return 'infrastructure/';
     }
+    return 'infrastructure/';
   }
 
   function environmentExists(name) {
@@ -58,4 +56,4 @@ module.exports = (opts) => {
   };
 
   return exports;
-}
+};

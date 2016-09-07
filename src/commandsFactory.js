@@ -8,7 +8,7 @@ module.exports = (opts) => {
   const environment = opts.environment;
 
   function getCommand(name) {
-    /* eslint-disable-next-line global-require */
+    // eslint-disable-next-line global-require
     return require(`./commands/${name}`)({
       engine,
       options,
@@ -23,4 +23,4 @@ module.exports = (opts) => {
   return {
     getCommand,
   };
-}
+};

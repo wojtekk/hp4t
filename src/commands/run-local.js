@@ -13,19 +13,19 @@ module.exports = (opts) => {
   }
 
   function execute() {
-    console.log('Run local command');
+    logger.info('Run local command');
 
     const command = getCommand();
 
     logger.debug(command);
 
-    return shell.exec(command).code === 0
+    return shell.exec(command).code === 0;
   }
 
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

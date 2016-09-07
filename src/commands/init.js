@@ -19,7 +19,7 @@ module.exports = (opts) => {
     shell.ls('-RA', `${hp4tDir}/src/templates/${language}/`).forEach(file => {
       if (fs.existsSync(`${projectDir}/${file}`)) {
         logger.info(`Move file: ${file} => ${file}.old`);
-        shell.mv(`${projectDir}/${file}`, `${projectDir}/${file}.old`); //FIXME
+        shell.mv(`${projectDir}/${file}`, `${projectDir}/${file}.old`);
       }
     });
   }
@@ -30,7 +30,8 @@ module.exports = (opts) => {
         logger.debug(`Create directory: ${file}`);
         shell.mkdir(`${projectDir}/${file}`);
       } else {
-        logger.info(`Copy file: ${path.relative(projectDir, `${languageTemplatesDir}/${file}`)} => ${file}`);
+        logger.info(`Copy file: ${path.relative(projectDir,
+          `${languageTemplatesDir}/${file}`)} => ${file}`);
         shell.cp(`${languageTemplatesDir}/${file}`, `${projectDir}/${file}`);
       }
     });
@@ -59,7 +60,7 @@ module.exports = (opts) => {
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

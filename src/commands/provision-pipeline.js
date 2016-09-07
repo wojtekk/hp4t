@@ -19,7 +19,7 @@ module.exports = (opts) => {
   }
 
   function getConfig() {
-    /* eslint-disable-next-line global-require */
+    // eslint-disable-next-line global-require
     return require(getConfigFileName())();
   }
 
@@ -38,7 +38,7 @@ module.exports = (opts) => {
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

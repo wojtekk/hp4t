@@ -44,7 +44,7 @@ module.exports = (opts) => {
   }
 
   function execute() {
-    console.log('Deploy application to Heroku');
+    logger.info('Deploy application to Heroku');
 
     setup();
     if (!addRemote()) {
@@ -68,7 +68,7 @@ module.exports = (opts) => {
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

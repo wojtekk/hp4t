@@ -1,5 +1,4 @@
 module.exports = () => {
-
   function check(pullRequest) {
     return pullRequest === false;
   }
@@ -7,4 +6,4 @@ module.exports = () => {
   return {
     check,
   };
-}
+};

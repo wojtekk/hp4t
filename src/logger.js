@@ -3,7 +3,8 @@ const chalk = require('chalk');
 const appName = 'HP4T';
 
 function prepare(prefix, params, color = null) {
-  return [color ? chalk.styles[color].open : '', prefix].concat(params, [color ? chalk.styles[color].close : '']);
+  return [color ? chalk.styles[color].open : '', prefix]
+    .concat(params, [color ? chalk.styles[color].close : '']);
 }
 
 module.exports = (opts) => {
@@ -11,24 +12,24 @@ module.exports = (opts) => {
 
   function debug(...params) {
     if (verbose) {
-      console.info.apply(console, prepare(`${appName}: [Debug]`, params, 'blue'));
+      console.info(...prepare(`${appName}: [Debug]`, params, 'blue'));
     }
   }
 
   function info(...params) {
-    console.info.apply(console, prepare(`${appName}:`, params));
+    console.info(...prepare(`${appName}:`, params));
   }
 
   function warn(...params) {
-    console.warn.apply(console, prepare(`${appName}:`, params, 'yellow'));
+    console.warn(...prepare(`${appName}:`, params, 'yellow'));
   }
 
   function error(...params) {
-    console.error.apply(console, prepare(`${appName}:`, params, 'red'));
+    console.error(...prepare(`${appName}:`, params, 'red'));
   }
 
   function log(...params) {
-    console.log.apply(console, prepare(`${appName}:`, params));
+    console.log(...prepare(`${appName}:`, params));
   }
 
   return {
@@ -38,4 +39,4 @@ module.exports = (opts) => {
     error,
     log,
   };
-}
+};

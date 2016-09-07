@@ -7,13 +7,14 @@ function checkConditions() {
 module.exports = (opts) => {
   const config = opts.config;
   const environment = opts.environment;
+  const logger = opts.logger;
 
   function getAppName() {
     return config.get(environment, 'app');
   }
 
   function execute() {
-    console.log('Promote Heroku application');
+    logger.info('Promote Heroku application');
 
     const appName = getAppName();
 
@@ -23,7 +24,7 @@ module.exports = (opts) => {
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

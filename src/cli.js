@@ -8,7 +8,6 @@ const branchConditionFactory = require('./conditions/branch');
 const tagsConditionFactory = require('./conditions/tags');
 const loggerFactory = require('./logger');
 const path = require('path');
-const fs = require('fs');
 
 const defaultOptions = {
   branch: {
@@ -76,7 +75,8 @@ const consoleArguments = yargs
     defaultOptions
   ))
   .command('deploy <environment> [args]', 'Deploy application', defaultOptions)
-  .command('promote <environment> [args]', 'Promote application to next environment', defaultOptions)
+  .command('promote <environment> [args]', 'Promote application to next environment',
+    defaultOptions)
   .command('run-remote <environment> <command> [args]', 'Run command on Heroku', defaultOptions)
   .command('run-local <environment> <command> [args]', 'Run command locally', defaultOptions)
   .command('notify-rollbar', 'Notify Rollbar about deployment', { verbose: defaultOptions.verbose })
@@ -90,7 +90,7 @@ if (options._[0] === undefined) {
   process.exit(1);
 }
 
-const logger = loggerFactory({ verbose: options.verbose || false })
+const logger = loggerFactory({ verbose: options.verbose || false });
 
 logger.debug('Verbose mode');
 
@@ -122,6 +122,7 @@ const commandsFactory = require('./commandsFactory')({
   logger,
   environment,
 });
+
 const command = commandsFactory.getCommand(commandName);
 
 if (!command || !command.checkConditions) {
@@ -147,7 +148,10 @@ if (command.checkConditions()) {
   if (!engine) {
     logger.error('Unknown CI/CD tool');
     process.exit(2);
-  } else if (!pullRequestCondition.check(engine.isPullRequest()) || !slugCondition.check(engine.getSlug()) || !branchCondition.check(engine.getBranch()) || !tagsCondition.check(engine.isTag())) {
+  } else if (!pullRequestCondition.check(engine.isPullRequest()) ||
+    !slugCondition.check(engine.getSlug()) ||
+    !branchCondition.check(engine.getBranch()) ||
+    !tagsCondition.check(engine.isTag())) {
     logger.info('Command skipped - conditions are not met');
     process.exit(0);
   }
@@ -168,13 +172,11 @@ try {
         logger.info('Command executed successfully');
         process.exit(0);
       });
+  } else if (!result) {
+    logger.error('Error during command execution');
+    process.exit(3);
   } else {
-    if (!result) {
-      logger.error('Error during command execution');
-      process.exit(3);
-    } else {
-      process.exit(0);
-    }
+    process.exit(0);
   }
 } catch (err) {
   logger.error('Unexpected exception', err);

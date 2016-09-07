@@ -20,14 +20,14 @@ module.exports = (opts) => {
   }
 
   function getConfig() {
-    const opts = {
+    const options = {
       app: config.get(environment, 'app'),
       environment,
     };
-    logger.debug('Application configuration options:\n', opts);
+    logger.debug('Application configuration options:\n', options);
 
-    /* eslint-disable-next-line global-require */
-    const configuration = require(getConfigFileName())(opts);
+    // eslint-disable-next-line global-require
+    const configuration = require(getConfigFileName())(options);
     logger.debug('Application configuration:\n', configuration);
 
     return configuration;
@@ -42,13 +42,13 @@ module.exports = (opts) => {
     const heroku = heroin(herokuApiKey, { debug: false, logLevel: 'NONE' });
 
     return heroku(configuration)
-      .then(res => true);
+      .then(() => true);
   }
 
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};

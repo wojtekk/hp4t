@@ -5,16 +5,10 @@ function checkConditions() {
 }
 
 module.exports = (opts) => {
-  const engine = opts.engine;
-  const options = opts.options;
-  const config = opts.config;
-  const hp4tDir = opts.hp4tDir;
-  const projectDir = opts.projectDir;
   const logger = opts.logger;
-  const environment = opts.environment;
 
   function execute() {
-    console.log('Notify rollbar about deployment');
+    logger.info('Notify rollbar about deployment');
 
     const rollbarDeployKey = process.env.ROLLBAR_DEPLOY_KEY;
     const revision = process.env.TRAVIS_COMMIT;
@@ -34,7 +28,7 @@ module.exports = (opts) => {
   const exports = {
     checkConditions,
     execute,
-  }
+  };
 
   return exports;
-}
+};
