@@ -1,18 +1,17 @@
 {
   "name": "hp4t",
   "version": "0.3.0",
-  "description": "HP4T",
+  "description": "Deploy and provision application to Heroku with pipelines for Travis CI",
   "main": "src/cli.js",
   "engines": {
     "node": ">= 6.0",
     "npm": ">= 3.8.6"
   },
   "bin": {
-    "hp4t": "./bin/hp4t.sh"
+    "hp4t": "./src/cli.js"
   },
   "scripts": {
-    "start": "node src/cli.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "lint": "eslint ."
   },
   "repository": {
@@ -28,7 +27,7 @@
     "heroku",
     "pipeline"
   ],
-  "author": "Wojciech Krawczyk <wojciech.krawczyk@schibsted.pl> (https://github.com/wojtekk)",
+  "author": "Wojciech Krawczyk <wojtekk@gmail.com> (https://github.com/wojtekk)",
   "contributors": [],
   "license": "MIT",
   "bugs": {
