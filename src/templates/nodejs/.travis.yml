@@ -8,7 +8,7 @@ addons:
     - heroku-toolbelt
 env:
   global:
-  # HP4T_ROLLBAR_DEPLOY_KEY
+  # ROLLBAR_DEPLOY_KEY
   - secure: ""
   # HEROKU_API_KEY
   - secure: ""
@@ -21,7 +21,6 @@ install:
 - alias hp4t="$(npm bin)/hp4t"
 before_script:
 - npm test
-- hp4t init
 - hp4t provision stage
 - hp4t deploy stage
 - hp4t provision production

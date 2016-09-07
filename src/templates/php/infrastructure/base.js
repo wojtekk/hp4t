@@ -1,4 +1,4 @@
-function getConfiguration(opts) {
+function getConfiguration() {
   const configuration = {
     region: 'eu',
     maintenance: false,

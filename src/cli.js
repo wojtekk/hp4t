@@ -62,7 +62,8 @@ const consoleArguments = yargs
     verbose: defaultOptions.verbose,
   })
   .command('provision <environment> [args]', 'Configure Heroku application', defaultOptions)
-  .command('provision-pipeline [pipeline] [args]', 'Configure Heroku pipelines', Object.assign({}, {
+  .command('provision-pipeline [pipeline] [args]', 'Configure Heroku pipelines', Object.assign({},
+    {
       pipeline: {
         alias: 'p',
         describe: 'Pipeline file name',

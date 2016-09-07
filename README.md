@@ -32,10 +32,11 @@ Trunk base development:
 
 ```yaml
 language: node_js
-node_js:
-- 6.0
+node_js: 6
 env:
   global:
+  # ROLLBAR_DEPLOY_KEY
+  - secure: ""
   # HEROKU_API_KEY
   - secure: ""
 cache:
@@ -57,9 +58,7 @@ before_script:
 script:
 - /bin/true
 after_success:
-- hp4t notify rollbar
-notifications:
-- hp4t notify slack
+- hp4t notify-rollbar
 ```
 
 With feature branch:
@@ -70,6 +69,8 @@ node_js:
 - 6.0
 env:
   global:
+  # ROLLBAR_DEPLOY_KEY
+  - secure: ""
   # HEROKU_API_KEY
   - secure: ""
 cache:
@@ -92,9 +93,7 @@ before_script:
 script:
 - /bin/true
 after_success:
-- hp4t notify rollbar
-notifications:
-- hp4t notify slack
+- hp4t notify-rollbar
 ```
 
 Continuous delivery (deploy on tag):
@@ -105,6 +104,8 @@ node_js:
 - 6.0
 env:
   global:
+  # ROLLBAR_DEPLOY_KEY
+  - secure: ""
   # HEROKU_API_KEY
   - secure: ""
 cache:
@@ -126,9 +127,7 @@ before_script:
 script:
 - /bin/true
 after_success:
-- hp4t notify rollbar
-notifications:
-- hp4t notify slack
+- hp4t notify-rollbar
 ```
 
 ## Configuration
