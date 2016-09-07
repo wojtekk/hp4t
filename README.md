@@ -8,6 +8,7 @@ Usage:
 
 Commands:
 
+- `help` - display help
 - `provision <env_name>` - provision app_name
 - `provision-pipeline` - provision pipeline
 - `deploy <env_name>` - deploy to app_name
@@ -28,18 +29,31 @@ Options:
 Trunk base development:
 
 ```yaml
+language: node_js
+node_js:
+- 6.0
+env:
+  global:
+  # HEROKU_API_KEY
+  - secure: ""
+cache:
+  apt: true
+  directories:
+  - node_modules
 install:
 - npm install
 - alias hp4t="$(npm bin)/hp4t"
 before_script:
-npm test
-hp4t provision-pipeline
-hp4t provision stage
-hp4t run stage "migrate database"
-hp4t deploy stage
-hp4t provision production
-hp4t promote stage # to production
-hp4t run production "migrate database"
+- npm test
+- hp4t provision-pipeline
+- hp4t provision stage
+- hp4t run stage "migrate database"
+- hp4t deploy stage
+- hp4t provision production
+- hp4t promote stage # to production
+- hp4t run production "migrate database"
+script:
+- /bin/true
 after_success:
 - hp4t notify rollbar
 notifications:
@@ -49,19 +63,32 @@ notifications:
 With feature branch:
 
 ```yaml
+language: node_js
+node_js:
+- 6.0
+env:
+  global:
+  # HEROKU_API_KEY
+  - secure: ""
+cache:
+  apt: true
+  directories:
+  - node_modules
 install:
 - npm install
 - alias hp4t="$(npm bin)/hp4t"
 before_script:
-npm test
-hp4t provision-pipeline
-hp4t provision stage
-hp4t run stage "migrate database"
-hp4t deploy stage
-hp4t provision production
-hp4t promote stage # to production
-hp4t run production "migrate database"
-hp4t deploy featureX --branch featureX
+- npm test
+- hp4t provision-pipeline
+- hp4t provision stage
+- hp4t run stage "migrate database"
+- hp4t deploy stage
+- hp4t provision production
+- hp4t promote stage # to production
+- hp4t run production "migrate database"
+- hp4t deploy featureX --branch featureX
+script:
+- /bin/true
 after_success:
 - hp4t notify rollbar
 notifications:
@@ -71,6 +98,17 @@ notifications:
 Continuous delivery (deploy on tag):
 
 ```yaml
+language: node_js
+node_js:
+- 6.0
+env:
+  global:
+  # HEROKU_API_KEY
+  - secure: ""
+cache:
+  apt: true
+  directories:
+  - node_modules
 install:
 - npm install
 - alias hp4t="$(npm bin)/hp4t"
@@ -84,6 +122,8 @@ before_script:
 - hp4t deploy production --tags # to production
 - hp4t run production "migrate database" --tags --branch master
 - hp4t deploy featureX --branch featureX
+script:
+- /bin/true
 after_success:
 - hp4t notify rollbar
 notifications:
