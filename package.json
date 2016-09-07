@@ -35,16 +35,16 @@
   },
   "homepage": "https://github.com/wojtekk/hp4t#readme",
   "dependencies": {
-    "command-line-args": "3.0.0",
+    "command-line-args": "3.0.1",
     "dotenv": "2.0.0",
-    "shelljs": "0.7.0"
+    "shelljs": "0.7.4"
   },
   "devDependencies": {
     "chai": "3.5.0",
-    "eslint": "2.13.1",
-    "eslint-config-airbnb-base": "3.0.1",
-    "eslint-plugin-import": "1.9.2",
+    "eslint": "3.4.0",
+    "eslint-config-airbnb-base": "7.0.0",
+    "eslint-plugin-import": "1.14.0",
     "eslint-plugin-security": "1.2.0",
-    "mocha": "2.5.3"
+    "mocha": "3.0.2"
   }
 }
