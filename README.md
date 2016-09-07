@@ -10,7 +10,8 @@ Commands:
 
 - `help` - display help
 - `init <language>` - initialize project
-- `export <environment>` - Export Heroku application configuration
+- `export <application>` - Export Heroku application configuration
+- `export-pipeline <pipeline>` - Export Heroku pipeline configuration
 - `provision-pipeline` - Configure Heroku pipelines
 - `provision <environment>` - Configure Heroku application
 - `deploy <environment>` - Deploy application
@@ -114,7 +115,6 @@ install:
 - alias hp4t="$(npm bin)/hp4t"
 before_script:
 - npm test
-- hp4t provision-pipeline
 - hp4t provision stage --branch develop
 - hp4t run stage "migrate database" --branch develop
 - hp4t deploy stage --branch develop
