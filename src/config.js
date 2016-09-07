@@ -3,7 +3,7 @@ const fs = require('fs');
 
 function getConfig(file) {
   try {
-    if (!fs.existsSync(file)) {
+    if (fs.existsSync(file)) {
       return yaml.safeLoad(fs.readFileSync(file, 'utf8'));
     }
     else {
@@ -16,10 +16,17 @@ function getConfig(file) {
 }
 
 module.exports = (opts) => {
+  const logger = opts.logger;
   const config = getConfig(opts.file);
 
+  logger.debug('Configuration:\n', config);
+
   function getInfrastructureDir() {
-    return config.infrastructure.dir || 'infrastructure/';
+    if (config.infrastructure && config.infrastructure.dir) {
+      return config.infrastructure.dir;
+    } else {
+      return 'infrastructure/';
+    }
   }
 
   function getEnvironmentConfiguration(environment) {

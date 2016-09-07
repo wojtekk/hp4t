@@ -62,7 +62,16 @@ const consoleArguments = yargs
     verbose: defaultOptions.verbose,
   })
   .command('provision <environment> [args]', 'Configure Heroku application', defaultOptions)
-  .command('provision-pipeline [args]', 'Configure Heroku pipelines', defaultOptions)
+  .command('provision-pipeline [pipeline] [args]', 'Configure Heroku pipelines', Object.assign({}, {
+      pipeline: {
+        alias: 'p',
+        describe: 'Pipeline file name',
+        type: 'string',
+        default: 'pipeline',
+      },
+    },
+    defaultOptions
+  ))
   .command('deploy <environment> [args]', 'Deploy application', defaultOptions)
   .command('promote <environment> [args]', 'Promote application to next environment', defaultOptions)
   .command('run-remote <environment> <command> [args]', 'Run command on Heroku', defaultOptions)
@@ -93,7 +102,7 @@ const environment = options.environment || null;
 logger.debug('Environment name:', environment);
 
 const configFile = `${projectDir}/.hp4t.yml`;
-const config = require('./config')({ file: configFile });
+const config = require('./config')({ file: configFile, logger });
 
 const commandName = options._[0];
 logger.debug('Command name:', commandName);
@@ -146,7 +155,10 @@ try {
         logger.error('Unexpected exception', err);
         process.exit(4);
       })
-      .then(() => process.exit(0));
+      .then(() => {
+        logger.info('Command executed successfully');
+        process.exit(0);
+      });
   } else {
     if (!result) {
       logger.error('Unknown error during command execution');
