@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const yargs = require('yargs');
 const enginesFactory = require('./enginesFactory')();
 const pullRequestConditionFactory = require('./conditions/pullRequest');
