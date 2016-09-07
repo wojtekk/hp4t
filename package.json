@@ -1,6 +1,6 @@
 {
   "name": "hp4t",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Deploy and provision application to Heroku with pipelines for Travis CI",
   "main": "src/cli.js",
   "engines": {
