@@ -1,0 +1,32 @@
+language: node_js
+node_js: 6
+addons:
+  apt:
+    sources:
+    - heroku
+    packages:
+    - heroku-toolbelt
+env:
+  global:
+  # HP4T_ROLLBAR_DEPLOY_KEY
+  - secure: ""
+  # HEROKU_API_KEY
+  - secure: ""
+cache:
+  apt: true
+  directories:
+  - node_modules
+install:
+- npm install
+- alias hp4t="$(npm bin)/hp4t"
+before_script:
+- npm test
+- hp4t init
+- hp4t provision stage
+- hp4t deploy stage
+- hp4t provision production
+- hp4t promote stage
+script:
+- /bin/true
+after_success:
+- hp4t notify-rollbar

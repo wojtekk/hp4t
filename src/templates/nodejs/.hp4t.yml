@@ -1,0 +1,8 @@
+environments:
+  default:
+    slug: repository-slug
+    branch: master
+  stage:
+    app: app-name-stage
+  production:
+    app: app-name-production
