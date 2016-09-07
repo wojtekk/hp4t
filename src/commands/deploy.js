@@ -33,7 +33,8 @@ module.exports = (opts) => {
 
   function addRemote() {
     const appName = getAppName();
-    return shell.exec(`git remote add heroku https://git.heroku.com/${appName}.git`).code === 0;
+
+    return shell.exec(`heroku git:remote --app ${appName}`).code === 0;
   }
 
   function push() {
