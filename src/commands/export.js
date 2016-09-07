@@ -17,11 +17,11 @@ module.exports = (opts) => {
   }
 
   function execute() {
-    console.log('Export Heroku application configuration');
+    logger.info('Export Heroku application configuration');
 
     const herokuApiKey = getHerokuApiKey();
     const appName = getAppName();
-    const heroku = heroin(herokuApiKey, { debug: false });
+    const heroku = heroin(herokuApiKey, { debug: false, logLevel: 'NONE' });
 
     return heroku.export(appName)
       .then(result => {

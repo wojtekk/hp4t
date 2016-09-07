@@ -17,11 +17,11 @@ module.exports = (opts) => {
   }
 
   function execute() {
-    console.log('Export Heroku pipeline configuration');
+    logger.info('Export Heroku pipeline configuration');
 
     const herokuApiKey = getHerokuApiKey();
     const pipelineName = getPipelineName();
-    const heroku = heroin(herokuApiKey, { debug: false });
+    const heroku = heroin(herokuApiKey, { debug: false, logLevel: 'NONE' });
 
     return heroku.pipeline(pipelineName)
       .then(result => {
