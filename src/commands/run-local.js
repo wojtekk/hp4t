@@ -6,6 +6,7 @@ function checkConditions() {
 
 module.exports = (opts) => {
   const options = opts.options;
+  const logger = opts.logger;
 
   function getCommand() {
     return options.command;
@@ -16,9 +17,9 @@ module.exports = (opts) => {
 
     const command = getCommand();
 
-    shell.exec(command)
+    logger.debug(command);
 
-    return true;
+    return shell.exec(command).code === 0
   }
 
   const exports = {
