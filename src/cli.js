@@ -76,6 +76,7 @@ const consoleArguments = yargs
   .command('promote <environment> [args]', 'Promote application to next environment', defaultOptions)
   .command('run-remote <environment> <command> [args]', 'Run command on Heroku', defaultOptions)
   .command('run-local <environment> <command> [args]', 'Run command locally', defaultOptions)
+  .command('notify-rollbar', 'Notify Rollbar about deployment', { verbose: defaultOptions.verbose })
   .strict()
   .help();
 
