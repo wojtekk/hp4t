@@ -126,6 +126,11 @@ if (!command || !command.checkConditions) {
 }
 
 if (command.checkConditions()) {
+  if (!config.environmentExists(environment)) {
+    logger.error('Unknown environment');
+    process.exit(2);
+  }
+
   const expectedSlug = options.slug || config.get(environment, 'slug');
   const expectedBranch = options.branch || config.get(environment, 'branch');
   const expectedTags = options.tags || config.get(environment, 'tags');
@@ -161,7 +166,7 @@ try {
       });
   } else {
     if (!result) {
-      logger.error('Unknown error during command execution');
+      logger.error('Error during command execution');
       process.exit(3);
     } else {
       process.exit(0);

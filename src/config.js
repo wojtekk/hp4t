@@ -29,6 +29,10 @@ module.exports = (opts) => {
     }
   }
 
+  function environmentExists(name) {
+    return name in config.environments;
+  }
+
   function getEnvironmentConfiguration(environment) {
     return config.environments[environment] || {};
   }
@@ -50,6 +54,7 @@ module.exports = (opts) => {
   const exports = {
     get,
     getInfrastructureDir,
+    environmentExists,
   };
 
   return exports;
