@@ -26,6 +26,7 @@ before_script:
 - composer test
 - npm install
 - alias hp4t="$(npm bin)/hp4t"
+- hp4t provision-pipeline
 - hp4t provision stage
 - hp4t deploy stage
 - hp4t provision production

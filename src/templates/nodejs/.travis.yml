@@ -21,6 +21,7 @@ install:
 - alias hp4t="$(npm bin)/hp4t"
 before_script:
 - npm test
+- hp4t provision-pipeline
 - hp4t provision stage
 - hp4t deploy stage
 - hp4t provision production
