@@ -1,9 +1,9 @@
 function getConfiguration() {
   const configuration = {
-    name: 'hp4t-test',
+    name: 'pipeline-name',
     apps: {
-      staging: 'hp4t-test-stage',
-      production: 'hp4t-test',
+      staging: 'app-name-stage',
+      production: 'app-name',
     },
   };
 
