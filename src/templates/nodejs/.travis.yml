@@ -9,9 +9,9 @@ addons:
 env:
   global:
   # ROLLBAR_DEPLOY_KEY
-  - secure: ""
+  # - secure: ""
   # HEROKU_API_KEY
-  - secure: ""
+  # - secure: ""
 cache:
   apt: true
   directories:
@@ -27,5 +27,5 @@ before_script:
 - hp4t promote stage
 script:
 - /bin/true
-after_success:
-- hp4t notify-rollbar
+# after_success:
+# - hp4t notify-rollbar
