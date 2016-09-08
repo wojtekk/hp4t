@@ -42,7 +42,7 @@ module.exports = (opts) => {
       shell.cp(`${templatesDir}/package.json`, `${projectDir}/`);
     }
     logger.info('Installing lodash ...');
-    shell.exec('npm i lodash --save');
+    shell.exec('npm i lodash --save-dev');
   }
 
   function execute() {
